@@ -15,7 +15,8 @@ app.engine('html', templateEngine.renderFile);
 app.set('view engine', 'html');
 
 // views dir
-app.set('views', dir('views'));
+app.use(express.static(dir('public')));
+app.set('views', dir('public/views'));
 
 // npm js dir for frontend
 app.use(express.static(dir('../node_modules')));

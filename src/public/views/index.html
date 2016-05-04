@@ -45,15 +45,16 @@
 		};
 	}]);
 
-	myApp.controller('SocketCtrl', ['$scope', '$log', 'socket', ($scope, $log, socket) => {
+	myApp.controller('ChatCtrl', ['$scope', '$log', 'socket', ($scope, $log, socket) => {
 		$scope.chat = [];
 		socket.on('welcome', (data) => {
 			$log.log('welcome', data);
-			$scope.chat.push({ socketid: 'welcome', said: data });
+			$scope.chat.push({ socketId: 'Welcome', said: data });
+			$scope.socketName = data;
 		});
 		socket.on('said', (data) => {
-			let [socketid, said] = data;
-			$scope.chat.push({ socketid, said });
+			let [socketId, said] = data;
+			$scope.chat.push({ socketId, said });
 			$scope.message = '';
 		});
 		$scope.send = () => {
@@ -61,29 +62,15 @@
 		};
 	}]);
 
+	myApp.directive('chat', () => ({ templateUrl: 'templates/chat.html' }));
+
 	</script>
 </head>
 <body>
 	<div class="container" ng-app="myApp">
 		<h1>Chat Application</h1>
 		<hr/>
-		<p ng-show="sometext">
-			Writing [[ message ]]
-		</p>
-		<div ng-controller="SocketCtrl">
-			<form class="input-group col-md-4 col-sm-6" ng-submit="send()">
-				<input type="text" class="form-control input-lg" ng-model="message"/>
-				<span class="input-group-btn">
-					<button class="btn btn-default btn-lg" type="submit">
-						<happyface>send</happyface>
-					</button>
-				</span>
-			</form>
-			<hr/>
-			<div ng-repeat="line in chat">
-				[[ line.socketid ]] - [[ line.said ]]
-			</div>
-		</div>
+		<chat></chat>
 	</div>
 </body>
 </html>

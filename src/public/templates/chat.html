@@ -9,9 +9,9 @@
 	</form>
 	<hr/>
 	<div ng-repeat="line in chat">
-		[[ line.socketId ]] - [[ line.said ]]
+		<strong>[[ line.socketId ]]</strong> - [[ line.said ]]
 	</div>
 	<div ng-show="message" style="opacity: 0.5;">
-		[[ socketName ]] - [[ message ]]
+		<strong>[[ socketName ]]</strong> - [[ message ]]
 	</div>
 </div>

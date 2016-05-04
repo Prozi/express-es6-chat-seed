@@ -45,6 +45,9 @@ myApp.controller('ChatCtrl', ['$scope', '$log', 'socket', ($scope, $log, socket)
 		let [socketId, said] = data;
 		$scope.chat.push({ socketId, said });
 		$scope.message = '';
+		while ($scope.chat.length > 10) {
+			$scope.chat.shift();
+		}
 	});
 	$scope.send = () => {
 		var msg = $scope.message.trim();

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link rel="image_src" href="/img/games/chilandsingle.jpg"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<link rel="stylesheet" type="text/css" href="bootstrap3/dist/css/bootstrap.min.css"/>
+	<script src="angular/angular.min.js" type="text/javascript"></script>
+	<script src="socket.io-client/socket.io.js" type="text/javascript"></script>
+	<script type="text/javascript">
+
+	var myApp = angular.module('myApp', []);
+
+	myApp.config(($interpolateProvider) => {
+		$interpolateProvider.startSymbol('[[');
+		$interpolateProvider.endSymbol(']]');
+	});
+
+	myApp.directive('happyface', () => ({ template: '(╯°□°）╯' }));
+
+	myApp.factory('socket', ['$rootScope', ($rootScope) => {
+		var socket = io.connect();
+		return {
+			on: (eventName, callback) => {
+				socket.on(eventName, function () {
+					var args = arguments;
+					$rootScope.$apply(() => {
+						if (callback) {
+							callback.apply(socket, args);
+						}
+					});
+				});
+			},
+			emit: (eventName, data, callback) => {
+				socket.emit(eventName, data, function () {
+					var args = arguments;
+					$rootScope.$apply(() => {
+						if (callback) {
+							callback.apply(socket, args);
+						}
+					});
+				})
+			}
+		};
+	}]);
+
+	myApp.controller('SocketCtrl', ['$scope', '$log', 'socket', ($scope, $log, socket) => {
+		$scope.chat = [];
+		socket.on('welcome', (data) => {
+			$log.log('welcome', data);
+			$scope.chat.push({ socketid: 'welcome', said: data });
+		});
+		socket.on('said', (data) => {
+			let [socketid, said] = data;
+			$scope.chat.push({ socketid, said });
+			$scope.message = '';
+		});
+		$scope.send = () => {
+			socket.emit('say', $scope.message);
+		};
+	}]);
+
+	</script>
+</head>
+<body>
+	<div class="container" ng-app="myApp">
+		<h1>Chat Application</h1>
+		<hr/>
+		<p ng-show="sometext">
+			Writing [[ message ]]
+		</p>
+		<div ng-controller="SocketCtrl">
+			<form class="input-group col-md-4 col-sm-6" ng-submit="send()">
+				<input type="text" class="form-control input-lg" ng-model="message"/>
+				<span class="input-group-btn">
+					<button class="btn btn-default btn-lg" type="submit">
+						<happyface>send</happyface>
+					</button>
+				</span>
+			</form>
+			<hr/>
+			<div ng-repeat="line in chat">
+				[[ line.socketid ]] - [[ line.said ]]
+			</div>
+		</div>
+	</div>
+</body>
+</html>

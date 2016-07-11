@@ -1,9 +1,11 @@
+'use strict';
+
 var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
   context: __dirname + "/src",
-  entry: "./public/assets/js/app",
+  entry: "./public/app.component",
   output: {
     path: __dirname + "/dist",
     filename: "bundle.js"

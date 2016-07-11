@@ -1,18 +1,23 @@
-<div ng-controller="ChatCtrl">
-	<form ng-submit="send()">
-		<md-input-container>
-			<label>feel free to chat...</label>
-			<input type="text" ng-model="message"/>
-		</md-input-container>
-		<md-button type="submit" class="md-raised md-primary">
-			<happyface></happyface>
-		</md-button>
-	</form>
-	<hr/>
-	<div ng-repeat="line in chat">
-		<strong>{{ line.socketId }}</strong> - {{ line.said }}
-	</div>
-	<div ng-show="message" style="opacity: 0.5;">
-		<strong>{{ socketName }}</strong> - {{ message }}
-	</div>
+<div ng-controller="ChatCtrl" layout="column">
+
+	<md-list flex md-scroll-y>
+
+        <md-list-item class="md-2-line" ng-repeat="item in chat" ng-click="null">
+          <img ng-src="https://api.adorable.io/avatars/40/{{item.socketId}}?set=set2" class="md-avatar" alt="{{item.socketId}}" />
+          <div class="md-list-item-text" layout="column">
+            <h3>{{ item.socketId }}</h3>
+            <p>{{ item.said }}</p>
+          </div>
+        </md-list-item>
+
+        <md-list-item class="md-2-line" ng-if="message" ng-click="null" style="opacity: 0.5;">
+          <img ng-src="https://api.adorable.io/avatars/40/{{socketName}}?set=set2" class="md-avatar" alt="{{socketName}}" />
+          <div class="md-list-item-text" layout="column">
+            <h3>{{ socketName }}</h3>
+            <p>{{ message }}</p>
+          </div>
+        </md-list-item>
+
+    </md-list>
+
 </div>

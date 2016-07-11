@@ -1,9 +1,11 @@
+'use strict';
+
 /* for webpack */
+import io         from 'socket.io-client';
 import angular    from 'angular';
 import ngAnimate  from 'angular-animate';
 import ngMaterial from 'angular-material';
 
-/* app */
 let myApp = angular.module('myApp', [ngAnimate, ngMaterial]);
 
 myApp.directive('happyface', () => ({ template: '(╯°□°）╯' }));

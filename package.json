@@ -4,9 +4,7 @@
   "description": "seed app in es6 js: express on babel-register hook",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "start:prod": "node dist/server.js",
-    "build": "babel src --out-dir dist"
+    "start": "nodemon ."
   },
   "author": "Prozi",
   "license": "MIT",

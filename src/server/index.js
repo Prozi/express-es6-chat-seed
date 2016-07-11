@@ -5,6 +5,7 @@ import path      from 'path';
 import http      from 'http';
 import sillyname from 'sillyname';
 import routes    from './routes';
+import chat      from './chat';
 
 const app = express();
 let dir = (part) => path.join(__dirname, part);
@@ -14,11 +15,11 @@ app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
 
 // views dir
-app.use(express.static(dir('public')));
-app.set('views', dir('public/views'));
+app.use(express.static(dir('../public')));
+app.set('views', dir('../public/views'));
 
 // npm js dir for frontend
-app.use(express.static(dir('../node_modules')));
+app.use(express.static(dir('../../node_modules')));
 
 // cors, rest
 app.use((req, res, next) => {
@@ -39,10 +40,10 @@ const server = http.createServer(app).listen(3000, () => {
 
 // start socket
 const sockets = io.listen(server);
+
 sockets.on('connect', (socket) => {
-	socket.id = sillyname().split(' ').pop();
-	socket.emit('welcome', socket.id);
-	socket.on('say', (data) => {
-		sockets.emit('said', [socket.id, data])
-	});
+  console.log('socket:connect');
+  socket.on('handshake:chat', (data) => {
+  	chat(sockets, socket);
+  });
 });

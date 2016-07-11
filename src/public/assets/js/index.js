@@ -1,15 +1,12 @@
 
 var myApp = angular.module('myApp', []);
 
-myApp.config(($interpolateProvider) => {
-	$interpolateProvider.startSymbol('[[');
-	$interpolateProvider.endSymbol(']]');
-});
-
 myApp.directive('happyface', () => ({ template: '(╯°□°）╯' }));
 
 myApp.factory('socket', ['$rootScope', ($rootScope) => {
 	var socket = io.connect();
+	socket.emit('handshake:chat');
+	socket.emit('enter', 'public');
 	return {
 		on: (eventName, callback) => {
 			socket.on(eventName, function () {
@@ -36,6 +33,14 @@ myApp.factory('socket', ['$rootScope', ($rootScope) => {
 
 myApp.controller('ChatCtrl', ['$scope', '$log', 'socket', ($scope, $log, socket) => {
 	$scope.chat = [];
+	socket.on('history', (data) => {
+		$log.log('history');
+		if (Array.isArray(data)) {
+			data.map((element) => {
+				$scope.chat.push({ socketId: element[0], said: element[1] });
+			});
+		}
+	});
 	socket.on('welcome', (data) => {
 		$log.log('welcome', data);
 		$scope.chat.push({ socketId: 'Welcome', said: data });

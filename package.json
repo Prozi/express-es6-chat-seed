@@ -1,7 +1,7 @@
 {
   "name": "express-es6-seed",
   "version": "1.0.0",
-  "description": "a seed app for es6 based express based on babel-register hook and nodemon",
+  "description": "seed app in es6 js: express on babel-register hook",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
@@ -9,7 +9,7 @@
     "build": "babel src --out-dir dist"
   },
   "author": "Prozi",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/Prozi/express-es6-seed.git"

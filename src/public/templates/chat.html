@@ -1,11 +1,12 @@
 <div ng-controller="ChatCtrl">
-	<form class="input-group col-md-4 col-sm-6" ng-submit="send()">
-		<input type="text" class="form-control input-lg" ng-model="message"/>
-		<span class="input-group-btn">
-			<button class="btn btn-default btn-lg" type="submit">
-				<happyface>send</happyface>
-			</button>
-		</span>
+	<form ng-submit="send()">
+		<md-input-container>
+			<label>feel free to chat...</label>
+			<input type="text" ng-model="message"/>
+		</md-input-container>
+		<md-button type="submit" class="md-raised md-primary">
+			<happyface></happyface>
+		</md-button>
 	</form>
 	<hr/>
 	<div ng-repeat="line in chat">

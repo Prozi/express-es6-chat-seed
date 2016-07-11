@@ -1,5 +1,5 @@
 
-var myApp = angular.module('myApp', []);
+var myApp = angular.module('myApp', ['ngMaterial']);
 
 myApp.directive('happyface', () => ({ template: '(╯°□°）╯' }));
 
@@ -33,6 +33,7 @@ myApp.factory('socket', ['$rootScope', ($rootScope) => {
 
 myApp.controller('ChatCtrl', ['$scope', '$log', 'socket', ($scope, $log, socket) => {
 	$scope.chat = [];
+	$scope.message = '';
 	socket.on('history', (data) => {
 		$log.log('history');
 		if (Array.isArray(data)) {

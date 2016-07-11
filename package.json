@@ -14,7 +14,10 @@
   },
   "dependencies": {
     "angular": "^1.5.5",
-    "bootstrap3": "^3.3.5",
+    "angular-animate": "^1.5.7",
+    "angular-aria": "^1.5.7",
+    "angular-material": "^1.1.0-rc.5",
+    "angular-messages": "^1.5.7",
     "ejs": "^2.4.2",
     "express": "^4.13.4",
     "morgan": "^1.7.0",

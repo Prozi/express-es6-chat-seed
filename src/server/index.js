@@ -16,6 +16,7 @@ app.set('view engine', 'html');
 
 // views dir
 app.use(express.static(dir('../public')));
+app.use(express.static(dir('../../dist')));
 app.set('views', dir('../public/views'));
 
 // npm js dir for frontend

@@ -1,17 +1,16 @@
 import express   from 'express';
-import swig      from 'swig';
+import ejs       from 'ejs';
 import io        from 'socket.io';
 import path      from 'path';
 import http      from 'http';
 import sillyname from 'sillyname';
-import routes    from './routes/main.routes';
+import routes    from './routes';
 
 const app = express();
 let dir = (part) => path.join(__dirname, part);
 
-// use jade
-const templateEngine = new swig.Swig();
-app.engine('html', templateEngine.renderFile);
+// view engine
+app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
 
 // views dir

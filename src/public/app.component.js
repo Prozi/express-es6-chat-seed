@@ -17,6 +17,7 @@ myApp.factory('chatSocket', ['$rootScope', '$log', ($rootScope, $log) => {
 
 	chat.messages = [];
 	chat.online   = [];
+	chat.rooms    = ['public'];
 	chat.username = '';
 
 	chat.on = (eventName, callback) => {
@@ -55,6 +56,12 @@ myApp.factory('chatSocket', ['$rootScope', '$log', ($rootScope, $log) => {
 			data.map((element) => {
 				chat.messages.push({ username: element[0], message: element[1] });
 			});
+		}
+	});
+
+	chat.on('rooms', (data) => {
+		if (Array.isArray(data)) {
+			chat.rooms = data;
 		}
 	});
 
@@ -101,6 +108,8 @@ myApp.controller('ChatCtrl', ['$scope', '$log', 'chatSocket', ($scope, $log, cha
 
 	$scope.message = '';
 
+	$scope.newRoom = '';
+
 	$scope.chat = chatSocket;
 
 	$scope.say = () => {
@@ -108,6 +117,22 @@ myApp.controller('ChatCtrl', ['$scope', '$log', 'chatSocket', ($scope, $log, cha
 		$scope.message = '';
 	};
 
+	$scope.createNewRoom = () => {
+		let newRoom = $scope.newRoom.trim();
+		if (newRoom) {
+			$scope.chat.emit('enter', newRoom);
+		}
+		$scope.newRoom = '';
+	};
+
+	$scope.enterRoom = (room) => {
+		$scope.chat.emit('enter', room);
+	};
+
 }]);
 
-myApp.directive('chat', () => ({ templateUrl: 'templates/chat.html' }));
+myApp.directive('rooms',  () => ({ templateUrl: 'templates/rooms.html' }));
+
+myApp.directive('chat',   () => ({ templateUrl: 'templates/chat.html' }));
+
+myApp.directive('online', () => ({ templateUrl: 'templates/online.html' }));

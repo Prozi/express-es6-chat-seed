@@ -1,0 +1,26 @@
+<md-sidenav
+    class="fill-height md-sidenav-right"
+    md-component-id="right"
+    md-is-locked-open="$mdMedia('gt-sm')"
+    md-disable-backdrop
+    md-whiteframe="4">
+
+  <md-toolbar class="md-theme-indigo">
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button">
+        <md-icon>group</md-icon>
+      </md-button>
+      <h2>Online</h2>
+    </div>
+  </md-toolbar>
+
+  <md-list flex md-scroll-y ng-controller="ChatCtrl">
+    <md-list-item ng-repeat="person in chat.online" class="md-2-line" ng-click="null">
+      <img ng-src="https://api.adorable.io/avatars/40/{{person}}?set=set2" class="md-avatar" alt="{{item.socketId}}" />
+      <div class="md-list-item-text" layout="column">
+        <h3>{{ person }}</h3>
+      </div>
+    </md-list-item>
+  </md-list>
+
+</md-sidenav>

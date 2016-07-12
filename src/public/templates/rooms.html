@@ -1,0 +1,37 @@
+<md-sidenav
+    class="fill-height md-sidenav-left"
+    md-component-id="left"
+    md-is-locked-open="$mdMedia('gt-sm')"
+    md-disable-backdrop
+    md-whiteframe="4">
+
+  <md-toolbar class="md-theme-indigo">
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button">
+        <md-icon>cloud</md-icon>
+      </md-button>
+      <h2>Rooms</h2>
+    </div>
+  </md-toolbar>
+
+  <md-list flex md-scroll-y ng-controller="ChatCtrl">
+    <md-list-item ng-repeat="room in chat.rooms" class="md-2-line" ng-click="enterRoom(room)">
+      <div class="md-list-item-text" layout="column">
+        <h3>#{{ room }}</h3>
+      </div>
+    </md-list-item>
+    <md-list-item class="md-2-line" ng-click="null">
+      <div class="md-list-item-text">
+        <form ng-submit="createNewRoom()" layout="row">
+          <md-input-container flex style="margin: 10px 0;">
+            <input aria-label="new room name" type="text" ng-model="newRoom"/>
+          </md-input-container>
+          <md-button type="submit" class="md-fab md-mini md-primary">
+            <md-icon>add</md-icon>
+          </md-button>
+        </form>
+      </div>
+    </md-list-item>
+  </md-list>
+
+</md-sidenav>

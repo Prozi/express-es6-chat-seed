@@ -5,3 +5,11 @@
 .fill-height {
 	height: 100%;
 }
+
+chat {
+	z-index: 0;
+}
+
+rooms, people {
+	z-index: 1;
+}

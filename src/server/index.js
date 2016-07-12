@@ -1,6 +1,6 @@
 import express   from 'express';
 import ejs       from 'ejs';
-import io        from 'socket.io';
+import socketio  from 'socket.io';
 import path      from 'path';
 import http      from 'http';
 import sillyname from 'sillyname';
@@ -40,11 +40,11 @@ const server = http.createServer(app).listen(3000, () => {
 });
 
 // start socket
-const sockets = io.listen(server);
+const io = socketio.listen(server);
 
-sockets.on('connect', (socket) => {
+io.on('connect', (socket) => {
   console.log('socket:connect');
   socket.on('handshake:chat', (data) => {
-  	chat(sockets, socket);
+  	chat(io, socket);
   });
 });

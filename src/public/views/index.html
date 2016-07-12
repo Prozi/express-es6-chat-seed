@@ -80,9 +80,9 @@
           <h2>People</h2>
         </div>
       </md-toolbar>
-      <md-content layout-padding>
-        <p>
-          you
+      <md-content layout-padding ng-controller="ChatCtrl">
+        <p ng-repeat="person in online">
+          {{person}}
         </p>
       </md-content>
     </md-sidenav>

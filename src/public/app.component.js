@@ -40,6 +40,7 @@ myApp.factory('socket', ['$rootScope', ($rootScope) => {
 
 myApp.controller('ChatCtrl', ['$scope', '$log', 'socket', ($scope, $log, socket) => {
 	$scope.chat = [];
+	$scope.online = [];
 	$scope.message = '';
 	socket.on('history', (data) => {
 		$log.log('history');
@@ -50,9 +51,8 @@ myApp.controller('ChatCtrl', ['$scope', '$log', 'socket', ($scope, $log, socket)
 		}
 	});
 	socket.on('welcome', (data) => {
-		$log.log('welcome', data);
-		$scope.chat.push({ socketId: 'Welcome', said: data });
 		$scope.socketName = data;
+		$scope.online.push(data);
 	});
 	socket.on('said', (data) => {
 		let [socketId, said] = data;
@@ -60,6 +60,22 @@ myApp.controller('ChatCtrl', ['$scope', '$log', 'socket', ($scope, $log, socket)
 		$scope.message = '';
 		while ($scope.chat.length > 10) {
 			$scope.chat.shift();
+		}
+	});
+	socket.on('leave', (data) => {
+		let index = $scope.online.indexOf(data);
+		if (index !== -1) {
+			$scope.online.splice(index, 1);
+		}
+	});
+	socket.on('join', (data) => {
+		if ($scope.online.indexOf(data) === -1) {
+			$scope.online.push(data);
+		}
+	});
+	socket.on('online', (data) => {
+		if (Array.isArray(data)) {
+			$scope.online = data;
 		}
 	});
 	$scope.send = () => {

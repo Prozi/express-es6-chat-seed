@@ -6,4 +6,5 @@ import './app/app.directives.happyface';
 import './app/app.directives.online';
 import './app/app.directives.rooms';
 import './app/app.chatSocket';
+import './app/app.PrivChatCtrl';
 import './app/app.ChatCtrl';

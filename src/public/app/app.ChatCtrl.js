@@ -1,11 +1,14 @@
 'use strict';
 
 export default angular.module('myApp')
-  .controller('ChatCtrl', ['$scope', '$log', '$mdSidenav', 'chatSocket', ($scope, $log, $mdSidenav, chatSocket) => {
+  .controller('ChatCtrl', 
+  	['$scope', '$log', '$mdSidenav', '$mdDialog', 'chatSocket', 
+  	($scope, $log, $mdSidenav, $mdDialog, chatSocket) => {
 
 	$scope.message = '';
 	$scope.newRoom = '';
 	$scope.chat    = chatSocket;
+	$scope.popup   = false;
 
 	$scope.say = () => {
 		$scope.chat.say($scope.message);
@@ -26,6 +29,17 @@ export default angular.module('myApp')
 
 	$scope.toggle = (name) => {
 		$mdSidenav(name).toggle();
+	};
+
+	$scope.priv = ($event, name) => {
+	    $mdDialog.show({
+	      controller: 'PrivChatCtrl',
+	      templateUrl: 'templates/dialog-priv.html',
+	      parent: angular.element(document.body),
+	      targetEvent: $event,
+	      clickOutsideToClose: true,
+	      fullscreen: false
+	    });
 	};
 
 }]);

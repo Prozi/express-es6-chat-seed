@@ -4,7 +4,7 @@
 With Socket.IO Angular1 chat on front-end
 
 > using babel-register hook and nodemon for development
-and a babel build for production
+and webpack build for frontend bundle.js
 
 ### Quick start
 
@@ -26,7 +26,8 @@ http://localhost:3000
 
 MIT Licensed
 
-Copyright (c) 2016, [Jacek Pietal](http://zapraszam.net) & [Artizan.io](https://artizan.io)
+Copyright (c) 2016, [Jacek Pietal](http://zapraszam.net)
+forked from project by [Artizan.io](https://artizan.io)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation the

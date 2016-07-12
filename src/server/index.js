@@ -1,11 +1,12 @@
-import express   from 'express';
-import ejs       from 'ejs';
-import socketio  from 'socket.io';
-import path      from 'path';
-import http      from 'http';
-import sillyname from 'sillyname';
-import routes    from './routes';
-import chat      from './chat';
+import express     from 'express';
+import ejs         from 'ejs';
+import socketio    from 'socket.io';
+import path        from 'path';
+import http        from 'http';
+import sillyname   from 'sillyname';
+import compression from 'compression';
+import routes      from './routes';
+import chat        from './chat';
 
 const app = express();
 let dir = (part) => path.join(__dirname, part);
@@ -32,6 +33,9 @@ app.use((req, res, next) => {
 
 // route handler
 app.use('/', routes);
+
+// compression
+app.use(compression());
 
 // start http server
 const server = http.createServer(app).listen(3000, () => {

@@ -10,80 +10,104 @@ let myApp = angular.module('myApp', [ngAnimate, ngMaterial]);
 
 myApp.directive('happyface', () => ({ template: '(╯°□°）╯' }));
 
-myApp.factory('socket', ['$rootScope', ($rootScope) => {
-	var socket = io.connect();
-	socket.emit('handshake:chat');
-	socket.emit('enter', 'public');
-	return {
-		on: (eventName, callback) => {
-			socket.on(eventName, function () {
-				var args = arguments;
-				$rootScope.$apply(() => {
-					if (callback) {
-						callback.apply(socket, args);
-					}
-				});
-			});
-		},
-		emit: (eventName, data, callback) => {
-			socket.emit(eventName, data, function () {
-				var args = arguments;
-				$rootScope.$apply(() => {
-					if (callback) {
-						callback.apply(socket, args);
-					}
-				});
-			})
-		}
-	};
-}]);
+myApp.factory('chatSocket', ['$rootScope', '$log', ($rootScope, $log) => {
 
-myApp.controller('ChatCtrl', ['$scope', '$log', 'socket', ($scope, $log, socket) => {
-	$scope.chat = [];
-	$scope.online = [];
-	$scope.message = '';
-	socket.on('history', (data) => {
-		$log.log('history');
+	let chat   = {};
+	let socket = io.connect();
+
+	chat.messages = [];
+	chat.online   = [];
+	chat.username = '';
+
+	chat.on = (eventName, callback) => {
+		socket.on(eventName, function () {
+			let args = arguments;
+			$rootScope.$apply(() => {
+				if (callback) {
+					callback.apply(socket, args);
+				}
+			});
+		});
+	};
+
+	chat.emit = (eventName, data, callback) => {
+		socket.emit(eventName, data, function () {
+			let args = arguments;
+			$rootScope.$apply(() => {
+				if (callback) {
+					callback.apply(socket, args);
+				}
+			});
+		})
+	};
+
+	chat.say = (message) => {
+		if (message) {
+			let trimmed = message.trim();
+			if (trimmed) {
+				chat.emit('say', trimmed);
+			}
+		}
+	}
+
+	chat.on('history', (data) => {
 		if (Array.isArray(data)) {
 			data.map((element) => {
-				$scope.chat.push({ socketId: element[0], said: element[1] });
+				chat.messages.push({ username: element[0], message: element[1] });
 			});
 		}
 	});
-	socket.on('welcome', (data) => {
-		$scope.socketName = data;
-		$scope.online.push(data);
+
+	chat.on('welcome', (data) => {
+		chat.username = data;
+		chat.online.push(data);
 	});
-	socket.on('said', (data) => {
-		let [socketId, said] = data;
-		$scope.chat.push({ socketId, said });
-		$scope.message = '';
-		while ($scope.chat.length > 10) {
-			$scope.chat.shift();
+
+	chat.on('said', (data) => {
+		let [username, message] = data;
+		chat.messages.push({ username, message });
+		while (chat.messages.length > 10) {
+			chat.messages.shift();
 		}
 	});
-	socket.on('leave', (data) => {
-		let index = $scope.online.indexOf(data);
+
+	chat.on('leave', (data) => {
+		let index = chat.online.indexOf(data);
 		if (index !== -1) {
-			$scope.online.splice(index, 1);
+			chat.online.splice(index, 1);
 		}
 	});
-	socket.on('join', (data) => {
-		if ($scope.online.indexOf(data) === -1) {
-			$scope.online.push(data);
+
+	chat.on('join', (data) => {
+		if (chat.online.indexOf(data) === -1) {
+			chat.online.push(data);
 		}
 	});
-	socket.on('online', (data) => {
+
+	chat.on('online', (data) => {
 		if (Array.isArray(data)) {
-			$scope.online = data;
+			chat.online = data;
 		}
 	});
-	$scope.send = () => {
-		var msg = $scope.message.trim();
-		if (msg) {
-			socket.emit('say', msg);
-		}
+
+	chat.emit('handshake:chat');
+	chat.emit('enter', 'public');
+
+	return chat;
+
+}]);
+
+myApp.controller('ChatCtrl', ['$scope', '$log', 'chatSocket', ($scope, $log, chatSocket) => {
+
+	$scope.message = '';
+
+	$scope.chat = chatSocket;
+
+	$scope.say = () => {
+		$scope.chat.say($scope.message);
+		$scope.message = '';
 	};
+
 }]);
 
 myApp.directive('chat', () => ({ templateUrl: 'templates/chat.html' }));

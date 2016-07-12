@@ -18,6 +18,7 @@
         md-is-locked-open="$mdMedia('gt-sm')"
         md-disable-backdrop
         md-whiteframe="4">
+
       <md-toolbar class="md-theme-indigo">
         <div class="md-toolbar-tools">
           <md-button class="md-icon-button">
@@ -26,11 +27,16 @@
           <h2>Rooms</h2>
         </div>
       </md-toolbar>
-      <md-content layout-padding>
-        <p>
-          #public
-        </p>
-      </md-content>
+
+      <md-list flex md-scroll-y ng-controller="ChatCtrl">
+        <md-list-item ng-repeat="person in online" class="md-2-line" ng-repeat="item in chat" ng-click="null">
+          <img ng-src="https://api.adorable.io/avatars/40/{{person}}?set=set2" class="md-avatar" alt="{{item.socketId}}" />
+          <div class="md-list-item-text" layout="column">
+            <h3>{{ person }}</h3>
+          </div>
+        </md-list-item>
+      </md-list>
+
     </md-sidenav>
 
     <md-content flex layout="column" class="fill-height">
@@ -49,19 +55,15 @@
       </md-content>
 
       <md-toolbar class="md-accent">
-        <div class="md-toolbar-tools">
-
-  <form ng-controller="ChatCtrl" flex ng-submit="send()" layout="row">
-    <md-input-container flex style="margin: 0;">
-      <label>feel free to chat...</label>
-      <input type="text" ng-model="message"/>
-    </md-input-container>
-    <md-button type="submit" class="md-raised md-accent">
-      <happyface></happyface>
-    </md-button>
-  </form>
-
-        </div>
+        <form class="md-toolbar-tools" ng-controller="ChatCtrl" flex ng-submit="say()" layout="row">
+          <md-input-container flex style="margin: 0;">
+            <label>feel free to chat...</label>
+            <input type="text" ng-model="message"/>
+          </md-input-container>
+          <md-button type="submit" class="md-raised md-accent">
+            <happyface></happyface>
+          </md-button>
+        </form>
       </md-toolbar>
 
     </md-content>
@@ -72,6 +74,7 @@
         md-is-locked-open="$mdMedia('gt-sm')"
         md-disable-backdrop
         md-whiteframe="4">
+
       <md-toolbar class="md-theme-indigo">
         <div class="md-toolbar-tools">
           <md-button class="md-icon-button">
@@ -81,18 +84,14 @@
         </div>
       </md-toolbar>
 
-
-  <md-list flex md-scroll-y ng-controller="ChatCtrl">
-
-        <md-list-item ng-repeat="person in online" class="md-2-line" ng-repeat="item in chat" ng-click="null">
+      <md-list flex md-scroll-y ng-controller="ChatCtrl">
+        <md-list-item ng-repeat="person in chat.online" class="md-2-line" ng-click="null">
           <img ng-src="https://api.adorable.io/avatars/40/{{person}}?set=set2" class="md-avatar" alt="{{item.socketId}}" />
           <div class="md-list-item-text" layout="column">
             <h3>{{ person }}</h3>
           </div>
         </md-list-item>
-
-  </md-list>
-
+      </md-list>
 
     </md-sidenav>
   </section>

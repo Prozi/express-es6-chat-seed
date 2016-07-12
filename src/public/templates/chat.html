@@ -2,18 +2,18 @@
 
 	<md-list flex md-scroll-y>
 
-        <md-list-item class="md-2-line" ng-repeat="item in chat" ng-click="null">
-          <img ng-src="https://api.adorable.io/avatars/40/{{item.socketId}}?set=set2" class="md-avatar" alt="{{item.socketId}}" />
+        <md-list-item class="md-2-line" ng-repeat="item in chat.messages" ng-click="null">
+          <img ng-src="https://api.adorable.io/avatars/40/{{item.username}}?set=set2" class="md-avatar" alt="{{item.username}}" />
           <div class="md-list-item-text" layout="column">
-            <h3>{{ item.socketId }}</h3>
-            <p>{{ item.said }}</p>
+            <h3>{{ item.username }}</h3>
+            <p>{{ item.message }}</p>
           </div>
         </md-list-item>
 
         <md-list-item class="md-2-line" ng-if="message" ng-click="null" style="opacity: 0.5;">
-          <img ng-src="https://api.adorable.io/avatars/40/{{socketName}}?set=set2" class="md-avatar" alt="{{socketName}}" />
+          <img ng-src="https://api.adorable.io/avatars/40/{{chat.username}}?set=set2" class="md-avatar" alt="{{chat.username}}" />
           <div class="md-list-item-text" layout="column">
-            <h3>{{ socketName }}</h3>
+            <h3>{{ chat.username }}</h3>
             <p>{{ message }}</p>
           </div>
         </md-list-item>

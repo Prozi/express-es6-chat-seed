@@ -80,11 +80,20 @@
           <h2>People</h2>
         </div>
       </md-toolbar>
-      <md-content layout-padding ng-controller="ChatCtrl">
-        <p ng-repeat="person in online">
-          {{person}}
-        </p>
-      </md-content>
+
+
+  <md-list flex md-scroll-y ng-controller="ChatCtrl">
+
+        <md-list-item ng-repeat="person in online" class="md-2-line" ng-repeat="item in chat" ng-click="null">
+          <img ng-src="https://api.adorable.io/avatars/40/{{person}}?set=set2" class="md-avatar" alt="{{item.socketId}}" />
+          <div class="md-list-item-text" layout="column">
+            <h3>{{ person }}</h3>
+          </div>
+        </md-list-item>
+
+  </md-list>
+
+
     </md-sidenav>
   </section>
 

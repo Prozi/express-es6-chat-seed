@@ -38,7 +38,7 @@ app.use('/', routes);
 app.use(compression());
 
 // start http server
-const server = http.createServer(app).listen(3000, () => {
+const server = http.createServer(app).listen(process.env.PORT || 3000, () => {
 	const {address, port} = server.address();
 	console.log(`Chat app listening at http://${address}:${port}`);
 });

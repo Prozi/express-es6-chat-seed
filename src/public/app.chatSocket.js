@@ -1,16 +1,9 @@
 'use strict';
 
-/* for webpack */
-import io         from 'socket.io-client';
-import angular    from 'angular';
-import ngAnimate  from 'angular-animate';
-import ngMaterial from 'angular-material';
+import io from 'socket.io-client';
 
-let myApp = angular.module('myApp', [ngAnimate, ngMaterial]);
-
-myApp.directive('happyface', () => ({ template: '(╯°□°）╯' }));
-
-myApp.factory('chatSocket', ['$rootScope', '$log', ($rootScope, $log) => {
+export default angular.module('myApp')
+  .factory('chatSocket', ['$rootScope', '$log', ($rootScope, $log) => {
 
 	let chat   = {};
 	let socket = io.connect();
@@ -103,36 +96,3 @@ myApp.factory('chatSocket', ['$rootScope', '$log', ($rootScope, $log) => {
 	return chat;
 
 }]);
-
-myApp.controller('ChatCtrl', ['$scope', '$log', 'chatSocket', ($scope, $log, chatSocket) => {
-
-	$scope.message = '';
-
-	$scope.newRoom = '';
-
-	$scope.chat = chatSocket;
-
-	$scope.say = () => {
-		$scope.chat.say($scope.message);
-		$scope.message = '';
-	};
-
-	$scope.createNewRoom = () => {
-		let newRoom = $scope.newRoom.trim();
-		if (newRoom) {
-			$scope.chat.emit('enter', newRoom);
-		}
-		$scope.newRoom = '';
-	};
-
-	$scope.enterRoom = (room) => {
-		$scope.chat.emit('enter', room);
-	};
-
-}]);
-
-myApp.directive('rooms',  () => ({ templateUrl: 'templates/rooms.html' }));
-
-myApp.directive('chat',   () => ({ templateUrl: 'templates/chat.html' }));
-
-myApp.directive('online', () => ({ templateUrl: 'templates/online.html' }));

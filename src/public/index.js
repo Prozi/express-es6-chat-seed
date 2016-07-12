@@ -1,9 +1,9 @@
 'use strict';
 
-import './app';
-import './app.directives.chat';
-import './app.directives.happyface';
-import './app.directives.online';
-import './app.directives.rooms';
-import './app.chatSocket';
-import './app.ChatCtrl';
+import './app/app';
+import './app/app.directives.chat';
+import './app/app.directives.happyface';
+import './app/app.directives.online';
+import './app/app.directives.rooms';
+import './app/app.chatSocket';
+import './app/app.ChatCtrl';

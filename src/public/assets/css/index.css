@@ -6,10 +6,7 @@
 	height: 100%;
 }
 
-chat {
-	z-index: 0;
-}
-
-rooms, people {
-	z-index: 1;
+chat,
+chat md-toolbar {
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset;
 }

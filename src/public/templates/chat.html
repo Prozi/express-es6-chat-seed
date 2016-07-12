@@ -1,7 +1,13 @@
-<md-content layout="column" class="fill-height">
+<section layout="column" class="fill-height" ng-controller="ChatCtrl">
 
   <md-toolbar class="md-theme-indigo">
     <div class="md-toolbar-tools">
+      <md-button hide show-sm show-xs class="md-icon-button" ng-click="toggle('rooms')">
+        <md-icon>cloud</md-icon>
+      </md-button>
+      <md-button hide show-sm show-xs class="md-icon-button" ng-click="toggle('online')">
+        <md-icon>group</md-icon>
+      </md-button>
       <md-button class="md-icon-button">
         <md-icon>chat</md-icon>
       </md-button>
@@ -9,8 +15,8 @@
     </div>
   </md-toolbar>
 
-  <md-content md-scroll-y class="fill-height">
-    <div ng-controller="ChatCtrl" layout="column">
+  <div md-scroll-y class="fill-height">
+    <div layout="column">
     	<md-list flex md-scroll-y>
 
         <md-list-item class="md-2-line" ng-repeat="item in chat.messages" ng-click="null">
@@ -31,10 +37,10 @@
 
       </md-list>
     </div>
-  </md-content>
+  </div>
 
   <md-toolbar class="md-accent">
-    <form class="md-toolbar-tools" ng-controller="ChatCtrl" flex ng-submit="say()" layout="row">
+    <form class="md-toolbar-tools" flex ng-submit="say()" layout="row">
       <md-input-container flex style="margin: 0;">
         <input aria-label="chat message" type="text" ng-model="message"/>
       </md-input-container>
@@ -44,4 +50,4 @@
     </form>
   </md-toolbar>
 
-</md-content>
+</section>

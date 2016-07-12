@@ -1,7 +1,7 @@
 'use strict';
 
 export default angular.module('myApp')
-  .controller('ChatCtrl', ['$scope', '$log', 'chatSocket', ($scope, $log, chatSocket) => {
+  .controller('ChatCtrl', ['$scope', '$log', '$mdSidenav', 'chatSocket', ($scope, $log, $mdSidenav, chatSocket) => {
 
 	$scope.message = '';
 	$scope.newRoom = '';
@@ -22,6 +22,10 @@ export default angular.module('myApp')
 
 	$scope.enterRoom = (room) => {
 		$scope.chat.emit('enter', room);
+	};
+
+	$scope.toggle = (name) => {
+		$mdSidenav(name).toggle();
 	};
 
 }]);

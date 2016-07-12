@@ -45,6 +45,7 @@ export default angular.module('myApp')
 	}
 
 	chat.on('history', (data) => {
+		chat.messages = [];
 		if (Array.isArray(data)) {
 			data.map((element) => {
 				chat.messages.push({ username: element[0], message: element[1] });

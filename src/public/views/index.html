@@ -33,7 +33,7 @@
       </md-content>
     </md-sidenav>
 
-    <md-content flex>
+    <md-content flex layout="column" class="fill-height">
 
       <md-toolbar class="md-theme-indigo">
         <div class="md-toolbar-tools">
@@ -52,7 +52,7 @@
         <div class="md-toolbar-tools">
 
   <form ng-controller="ChatCtrl" flex ng-submit="send()" layout="row">
-    <md-input-container style="margin: 0;">
+    <md-input-container flex style="margin: 0;">
       <label>feel free to chat...</label>
       <input type="text" ng-model="message"/>
     </md-input-container>

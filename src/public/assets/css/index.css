@@ -3,5 +3,5 @@
 }
 
 .fill-height {
-	height: calc(100% - 128px);
+	height: 100%;
 }

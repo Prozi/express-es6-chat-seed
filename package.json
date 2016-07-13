@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "webpack",
-    "start": "nodemon ."
+    "start": "nodemon .",
+    "start:prod": "npm run postinstall && npm start" 
   },
   "author": "Prozi",
   "license": "MIT",
@@ -19,6 +20,7 @@
     "angular-aria": "^1.5.7",
     "angular-material": "^1.1.0-rc.5",
     "angular-messages": "^1.5.7",
+    "angularjs-scroll-glue": "^2.0.7",
     "compression": "^1.6.2",
     "ejs": "^2.4.2",
     "express": "^4.13.4",

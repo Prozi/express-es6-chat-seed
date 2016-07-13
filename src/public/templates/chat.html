@@ -15,29 +15,27 @@
     </div>
   </md-toolbar>
 
-  <div md-scroll-y class="fill-height" layout="column">
-    <md-content md-scroll-y style="background: transparent;">
-    	<md-list flex>
+  <md-content md-scroll-y scroll-glue class="fill-height" style="background: transparent;">
+    <md-list flex>
 
-        <md-list-item class="md-2-line" ng-repeat="item in getMessages()" ng-click="priv($event, item.username)">
-          <img ng-src="https://api.adorable.io/avatars/40/{{item.username}}?set=set2" class="md-avatar" alt="{{item.username}}" />
-          <div class="md-list-item-text" layout="column">
-            <h3>{{ item.username }}</h3>
-            <p>{{ item.message }}</p>
-          </div>
-        </md-list-item>
+      <md-list-item class="md-2-line" ng-repeat="item in getMessages()" ng-click="priv($event, item.username)">
+        <img ng-src="https://api.adorable.io/avatars/40/{{item.username}}?set=set2" class="md-avatar" alt="{{item.username}}" />
+        <div class="md-list-item-text" layout="column">
+          <h3>{{ item.username }}</h3>
+          <p>{{ item.message }}</p>
+        </div>
+      </md-list-item>
 
-        <md-list-item class="md-2-line" ng-if="message" ng-click="null" style="opacity: 0.5;">
-          <img ng-src="https://api.adorable.io/avatars/40/{{chat.username}}?set=set2" class="md-avatar" alt="{{chat.username}}" />
-          <div class="md-list-item-text" layout="column">
-            <h3>{{ chat.username }}</h3>
-            <p>{{ message }}</p>
-          </div>
-        </md-list-item>
+      <md-list-item class="md-2-line" ng-if="message" ng-click="null" style="opacity: 0.5;">
+        <img ng-src="https://api.adorable.io/avatars/40/{{chat.username}}?set=set2" class="md-avatar" alt="{{chat.username}}" />
+        <div class="md-list-item-text" layout="column">
+          <h3>{{ chat.username }}</h3>
+          <p>{{ message }}</p>
+        </div>
+      </md-list-item>
 
-      </md-list>
-    </div>
-  </div>
+    </md-list>
+  </md-content>
 
   <md-toolbar class="md-accent">
     <form class="md-toolbar-tools" flex ng-submit="say()" layout="row">

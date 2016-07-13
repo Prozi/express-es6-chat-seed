@@ -19,6 +19,12 @@ npm start
 
 # open in browser
 http://localhost:3000
+
+# to recompile after changes
+webpack
+
+# or to recompile and run
+npm run start:prod
 ```
 
 ## Demo

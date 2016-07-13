@@ -71,7 +71,7 @@ export default (io, socket) => {
     io.in(socket.room).emit('leave', socket.name);
   });
 
-  socket.on('enter', (entered) => {
+  socket.on('join', (entered) => {
     if (socket.room !== entered) {
       console.log(`@${socket.name} /join #${entered}`);
       if (socket.room) {
@@ -82,7 +82,7 @@ export default (io, socket) => {
       socket.join(socket.room);
       socket.emit('history', getMessages(socket.room));
       socket.emit('online', socketsInRoom(io, socket.room));
-      io.in(socket.room).emit('join', socket.name);
+      io.in(socket.room).emit('joined', socket.name);
       io.emit('rooms', getRooms(io));
     }
   });

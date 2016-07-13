@@ -20,13 +20,13 @@ export default angular.module('myApp')
 	$scope.createNewRoom = () => {
 		let newRoom = $scope.newRoom.trim();
 		if (newRoom) {
-			$scope.chat.emit('enter', newRoom);
+			$scope.chat.emit('join', newRoom);
 		}
 		$scope.newRoom = '';
 	};
 
-	$scope.enterRoom = (room) => {
-		$scope.chat.emit('enter', room);
+	$scope.joinRoom = (room) => {
+		$scope.chat.emit('join', room);
 	};
 
 	$scope.toggle = (name) => {

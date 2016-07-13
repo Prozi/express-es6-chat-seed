@@ -88,7 +88,7 @@ export default angular.module('myApp')
 		}
 	});
 
-	chat.on('join', (data) => {
+	chat.on('joined', (data) => {
 		if (chat.online.indexOf(data) === -1) {
 			chat.online.push(data);
 		}
@@ -101,7 +101,7 @@ export default angular.module('myApp')
 	});
 
 	chat.emit('handshake:chat');
-	chat.emit('enter', 'public');
+	chat.emit('join', 'public');
 
 	return chat;
 

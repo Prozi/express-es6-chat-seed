@@ -1,3 +1,51 @@
-<md-dialog aria-label="private chat" ng-cloak>
-  <chat></chat>
+<md-dialog aria-label="private chat" ng-cloak style="background: transparent;">
+
+  <md-toolbar class="md-theme-indigo">
+    <div class="md-toolbar-tools">
+      <md-button ng-if="!popup" hide show-sm show-xs class="md-icon-button" ng-click="toggle('rooms')">
+        <md-icon>cloud</md-icon>
+      </md-button>
+      <md-button ng-if="!popup" hide show-sm show-xs class="md-icon-button" ng-click="toggle('online')">
+        <md-icon>group</md-icon>
+      </md-button>
+      <md-button class="md-icon-button">
+        <md-icon>chat</md-icon>
+      </md-button>
+      <h2>{{ popup ? getPrivPartner() : 'Chat' }}</h2>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content md-scroll-y scroll-glue class="fill-height" style="background: white;">
+    <md-list flex>
+
+      <md-list-item class="md-2-line" ng-repeat="item in getMessages()" ng-click="priv($event, item.username)">
+        <img ng-src="https://api.adorable.io/avatars/40/{{item.username}}?set=set2" class="md-avatar" alt="{{item.username}}" />
+        <div class="md-list-item-text" layout="column">
+          <h3>{{ item.username }}</h3>
+          <p>{{ item.message }}</p>
+        </div>
+      </md-list-item>
+
+      <md-list-item class="md-2-line" ng-if="message" ng-click="null" style="opacity: 0.5;">
+        <img ng-src="https://api.adorable.io/avatars/40/{{chat.username}}?set=set2" class="md-avatar" alt="{{chat.username}}" />
+        <div class="md-list-item-text" layout="column">
+          <h3>{{ chat.username }}</h3>
+          <p>{{ message }}</p>
+        </div>
+      </md-list-item>
+
+    </md-list>
+  </md-dialog-content>
+
+  <md-dialog-actions class="md-accent">
+    <form class="md-toolbar-tools" flex ng-submit="say()" layout="row" style="padding: 0;">
+      <md-input-container flex style="margin: 0;">
+        <input aria-label="chat message" type="text" ng-model="message"/>
+      </md-input-container>
+      <md-button type="submit" class="md-raised md-primary" style="margin-right: 10px;">
+        <happyface></happyface>
+      </md-button>
+    </form>
+  </md-dialog-actions>
+
 </md-dialog>

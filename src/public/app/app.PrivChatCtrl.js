@@ -11,6 +11,8 @@ export default angular.module('myApp')
 
 	$scope.chat.requestPrivate($rootScope.privPartner);
 
+	$scope.getPrivPartner = () => $rootScope.privPartner;
+
 	$scope.getMessages = () => $scope.chat.private;
 
 	$scope.say = () => {

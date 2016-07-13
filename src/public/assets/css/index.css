@@ -14,3 +14,18 @@ chat md-toolbar {
 md-list {
 	min-height: 88px;
 }
+
+.enter-animate {
+	opacity: 1;
+	transition: 0.2s ease-out all;
+}
+
+.enter-animate.ng-leave.ng-leave-active,
+.enter-animate.ng-enter {
+	opacity: 0;
+}
+
+md-dialog-actions.md-accent {
+	background-color: rgb(255,64,129);
+	min-height: 64px;
+}

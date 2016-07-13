@@ -19,7 +19,7 @@
     <md-content md-scroll-y style="background: transparent;">
     	<md-list flex>
 
-        <md-list-item class="md-2-line" ng-repeat="item in chat.messages" ng-click="priv($event, item.username)">
+        <md-list-item class="md-2-line" ng-repeat="item in getMessages()" ng-click="priv($event, item.username)">
           <img ng-src="https://api.adorable.io/avatars/40/{{item.username}}?set=set2" class="md-avatar" alt="{{item.username}}" />
           <div class="md-list-item-text" layout="column">
             <h3>{{ item.username }}</h3>

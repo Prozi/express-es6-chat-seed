@@ -33,6 +33,16 @@ function getRooms (io) {
   return res;
 }
 
+function speakTo (io, target, who, said) {
+  for (let id in io.sockets.connected) {
+    if (io.sockets.connected.hasOwnProperty(id)) {
+      if (io.sockets.connected[id].name === target) {
+        return io.sockets.connected[id].emit('said', [who, said]);
+      }
+    }
+  }  
+}
+
 export default (io, socket) => {
 
   console.log('chat:connected!');
@@ -45,6 +55,15 @@ export default (io, socket) => {
       console.log(`@${socket.name}#${socket.room}: ${said}`);
       io.in(socket.room).emit('said', [socket.name, said]);
       saveMessage(socket.room, socket.name, said);
+    }
+  });
+
+  socket.on('priv', (array) => {
+    let [target, said] = array;
+    if (socket.room) {
+      console.log(`@${socket.name}#${socket.room}: ${said} to ${target}`);
+      socket.emit('said', [socket.name, said]);
+      speakTo(io, target, socket.name, said);
     }
   });
 

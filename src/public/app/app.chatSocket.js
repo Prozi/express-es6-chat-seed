@@ -44,6 +44,15 @@ export default angular.module('myApp')
 		}
 	}
 
+	chat.priv = (who, message) => {
+		if (message) {
+			let trimmed = message.trim();
+			if (trimmed) {
+				chat.emit('priv', [who, trimmed]);
+			}
+		}
+	}
+
 	chat.on('history', (data) => {
 		chat.messages = [];
 		if (Array.isArray(data)) {

@@ -2,13 +2,15 @@
 
 export default angular.module('myApp')
   .controller('ChatCtrl', 
-  	['$scope', '$log', '$mdSidenav', '$mdDialog', 'chatSocket', 
-  	($scope, $log, $mdSidenav, $mdDialog, chatSocket) => {
+	['$rootScope', '$scope', '$log', '$mdSidenav', '$mdDialog', 'chatSocket', 
+	($rootScope, $scope, $log, $mdSidenav, $mdDialog, chatSocket) => {
 
-	$scope.message = '';
 	$scope.newRoom = '';
 	$scope.chat    = chatSocket;
+	$scope.message = '';
 	$scope.popup   = false;
+
+	$scope.getMessages = () => $scope.chat.messages;
 
 	$scope.say = () => {
 		$scope.chat.say($scope.message);
@@ -32,14 +34,15 @@ export default angular.module('myApp')
 	};
 
 	$scope.priv = ($event, name) => {
-	    $mdDialog.show({
-	      controller: 'PrivChatCtrl',
-	      templateUrl: 'templates/dialog-priv.html',
-	      parent: angular.element(document.body),
-	      targetEvent: $event,
-	      clickOutsideToClose: true,
-	      fullscreen: false
-	    });
+		$rootScope.privPartner = name;
+		$mdDialog.show({
+		  controller: 'PrivChatCtrl',
+		  templateUrl: 'templates/dialog-priv.html',
+		  parent: angular.element(document.body),
+		  targetEvent: $event,
+		  clickOutsideToClose: true,
+		  fullscreen: false
+		});
 	};
 
 }]);

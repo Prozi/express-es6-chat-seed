@@ -1,6 +1,7 @@
 import sillyname from 'sillyname';
 
 let messages = {};
+let privateMessages = {};
 
 function saveMessage (room, person, message) {
   if (!messages[room]) {
@@ -9,11 +10,11 @@ function saveMessage (room, person, message) {
   messages[room].push([person, message]);
 }
 
-function getMessages (room) {
+function getMessagesForRoom (room) {
   return messages[room];
 }
 
-function socketsInRoom (io, room) {
+function getSocketsInRoom (io, room) {
   let res = [];
   for (let id in io.sockets.adapter.rooms[room].sockets) {
     if (io.sockets.connected.hasOwnProperty(id)) {
@@ -33,11 +34,30 @@ function getRooms (io) {
   return res;
 }
 
+function getFakeRoom (who, target) {
+  return who < target ? `${who}-${target}` : `${target}-${who}`;
+}
+
+function savePrivateMessage (who, target, said) {
+  let fakeRoom = getFakeRoom(who, target);
+  if (!privateMessages[fakeRoom]) {
+    privateMessages[fakeRoom] = [];
+  }
+  privateMessages[fakeRoom].push([who, said]);
+  // console.log(JSON.stringify(privateMessages, null, 2));
+}
+
+function getPrivateMessages (who, target) {
+  let fakeRoom = getFakeRoom(who, target);
+  return privateMessages[fakeRoom] || [];
+}
+
 function speakTo (io, target, who, said) {
   for (let id in io.sockets.connected) {
     if (io.sockets.connected.hasOwnProperty(id)) {
       if (io.sockets.connected[id].name === target) {
-        return io.sockets.connected[id].emit('said', [who, said]);
+        io.sockets.connected[id].emit('prived', [who, said]);
+        savePrivateMessage(who, target, said);
       }
     }
   }  
@@ -62,9 +82,13 @@ export default (io, socket) => {
     let [target, said] = array;
     if (socket.room) {
       console.log(`@${socket.name} to @${target}: ${said}`);
-      socket.emit('said', [socket.name, said]);
+      socket.emit('prived', [socket.name, said]);
       speakTo(io, target, socket.name, said);
     }
+  });
+
+  socket.on('requestPrivate', (who) => {
+    socket.emit('privHistory', getPrivateMessages(who, socket.name));
   });
 
   socket.on('disconnect', () => {
@@ -80,10 +104,10 @@ export default (io, socket) => {
       }
       socket.room = entered;
       socket.join(socket.room);
-      socket.emit('history', getMessages(socket.room));
-      socket.emit('online', socketsInRoom(io, socket.room));
-      io.in(socket.room).emit('joined', socket.name);
+      socket.emit('history', getMessagesForRoom(socket.room));
+      socket.emit('online', getSocketsInRoom(io, socket.room));
       io.emit('rooms', getRooms(io));
+      io.in(socket.room).emit('joined', socket.name);
     }
   });
 

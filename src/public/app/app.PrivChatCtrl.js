@@ -5,13 +5,13 @@ export default angular.module('myApp')
 	['$rootScope', '$scope', '$log', '$mdSidenav', '$mdDialog', 'chatSocket', 
 	($rootScope, $scope, $log, $mdSidenav, $mdDialog, chatSocket) => {
 
-	let messages = [];
-
 	$scope.chat    = chatSocket;
 	$scope.popup   = true;
 	$scope.message = '';
 
-	$scope.getMessages = () => messages;
+	$scope.chat.requestPrivate($rootScope.privPartner);
+
+	$scope.getMessages = () => $scope.chat.private;
 
 	$scope.say = () => {
 		$scope.chat.priv($rootScope.privPartner, $scope.message);

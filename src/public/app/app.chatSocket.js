@@ -8,6 +8,7 @@ export default angular.module('myApp')
 	let chat   = {};
 	let socket = io.connect();
 
+	chat.private  = []; // priv messages
 	chat.messages = [];
 	chat.online   = [];
 	chat.rooms    = ['public'];
@@ -42,7 +43,7 @@ export default angular.module('myApp')
 				chat.emit('say', trimmed);
 			}
 		}
-	}
+	};
 
 	chat.priv = (who, message) => {
 		if (message) {
@@ -51,13 +52,32 @@ export default angular.module('myApp')
 				chat.emit('priv', [who, trimmed]);
 			}
 		}
-	}
+	};
+
+	chat.trim = (array) => {
+		while (array.length > 10) {
+			array.shift();
+		}
+	};
+
+	chat.requestPrivate = (who) => {
+		chat.emit('requestPrivate', who);
+	};
 
 	chat.on('history', (data) => {
 		chat.messages = [];
 		if (Array.isArray(data)) {
 			data.map((element) => {
 				chat.messages.push({ username: element[0], message: element[1] });
+			});
+		}
+	});
+
+	chat.on('privHistory', (data) => {
+		chat.private = [];
+		if (Array.isArray(data)) {
+			data.map((element) => {
+				chat.private.push({ username: element[0], message: element[1] });
 			});
 		}
 	});
@@ -76,9 +96,13 @@ export default angular.module('myApp')
 	chat.on('said', (data) => {
 		let [username, message] = data;
 		chat.messages.push({ username, message });
-		while (chat.messages.length > 10) {
-			chat.messages.shift();
-		}
+		chat.trim(chat.messages);
+	});
+
+	chat.on('prived', (data) => {
+		let [username, message] = data;
+		chat.private.push({ username, message });
+		chat.trim(chat.private);
 	});
 
 	chat.on('leave', (data) => {

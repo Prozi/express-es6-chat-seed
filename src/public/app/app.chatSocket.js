@@ -41,15 +41,17 @@ export default angular.module('myApp')
 			let trimmed = message.trim();
 			if (trimmed) {
 				chat.emit('say', trimmed);
+				chat.messages.push({ username: chat.username, message: trimmed });
 			}
 		}
 	};
 
-	chat.priv = (who, message) => {
+	chat.priv = (target, message) => {
 		if (message) {
 			let trimmed = message.trim();
 			if (trimmed) {
-				chat.emit('priv', [who, trimmed]);
+				chat.emit('priv', [target, trimmed]);
+				chat.private.push({ username: chat.username, message: trimmed });
 			}
 		}
 	};

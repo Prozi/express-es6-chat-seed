@@ -44,7 +44,6 @@ function savePrivateMessage (who, target, said) {
     privateMessages[fakeRoom] = [];
   }
   privateMessages[fakeRoom].push([who, said]);
-  // console.log(JSON.stringify(privateMessages, null, 2));
 }
 
 function getPrivateMessages (who, target) {
@@ -73,7 +72,7 @@ export default (io, socket) => {
   socket.on('say', (said) => {
     if (socket.room) {
       console.log(`@${socket.name}#${socket.room}: ${said}`);
-      io.in(socket.room).emit('said', [socket.name, said]);
+      socket.broadcast.to(socket.room).emit('said', [socket.name, said]);
       saveMessage(socket.room, socket.name, said);
     }
   });
@@ -82,7 +81,6 @@ export default (io, socket) => {
     let [target, said] = array;
     if (socket.room) {
       console.log(`@${socket.name} to @${target}: ${said}`);
-      socket.emit('prived', [socket.name, said]);
       speakTo(io, target, socket.name, said);
     }
   });

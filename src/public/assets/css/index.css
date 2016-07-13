@@ -10,3 +10,7 @@ chat,
 chat md-toolbar {
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset;
 }
+
+md-list {
+	min-height: 88px;
+}

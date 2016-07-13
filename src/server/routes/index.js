@@ -5,8 +5,11 @@ const router = express.Router();
 
 router.use(logger('dev'))
 
-router.get('/', (req, res) => {
+let index = (req, res) => {
 	res.render('index', {});
-});
+};
+
+router.get('/', index);
+router.post('/', index);
 
 export default router;

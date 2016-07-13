@@ -61,7 +61,7 @@ export default (io, socket) => {
   socket.on('priv', (array) => {
     let [target, said] = array;
     if (socket.room) {
-      console.log(`@${socket.name}#${socket.room}: ${said} to ${target}`);
+      console.log(`@${socket.name} to @${target}: ${said}`);
       socket.emit('said', [socket.name, said]);
       speakTo(io, target, socket.name, said);
     }

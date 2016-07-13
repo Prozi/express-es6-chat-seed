@@ -4,7 +4,7 @@
   "description": "seed app in es6 js: express on babel-register hook",
   "main": "index.js",
   "scripts": {
-    "prestart": "webpack",
+    "postinstall": "webpack",
     "start": "nodemon ."
   },
   "author": "Prozi",

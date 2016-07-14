@@ -13,6 +13,7 @@ chat md-toolbar {
 
 md-list {
 	min-height: 88px;
+	padding: 0;
 }
 
 .enter-animate {

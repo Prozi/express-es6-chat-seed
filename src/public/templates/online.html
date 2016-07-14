@@ -17,6 +17,7 @@
       <img ng-src="https://api.adorable.io/avatars/40/{{person}}?set=set2" class="md-avatar" alt="{{item.socketId}}" />
       <div class="md-list-item-text" layout="column">
         <h3>{{ person }}</h3>
+        <p ng-if="chat.username === person">- you</p>
       </div>
     </md-list-item>
   </md-list>

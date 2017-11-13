@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "webpack",
     "start": "nodemon .",
-    "start:prod": "npm run postinstall && npm start" 
+    "start:prod": "npm run postinstall && npm start"
   },
   "author": "Prozi",
   "license": "MIT",
@@ -27,8 +27,8 @@
     "morgan": "^1.7.0",
     "path": "^0.12.7",
     "sillyname": "^0.1.0",
-    "socket.io": "^1.4.6",
-    "socket.io-client": "^1.4.6"
+    "socket.io": "^2.0.0",
+    "socket.io-client": "^2.0.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",
